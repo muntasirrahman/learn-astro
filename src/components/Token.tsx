@@ -21,13 +21,16 @@ export const TokenUser = () => {
 		})
 			.then((response) => {
 				if (response.ok) {
-					setReceived(true);
 					return response.json();
 				} else {
 					alert("Token yang anda masukkan salah.");
 				}
 			})
-
+			.then((dataFromBackend) => {
+				setReceived(true);
+				const candidateData = dataFromBackend.candidate;
+				setCandidate(candidateData);
+			})
 			.catch((error) => {
 				console.error(error);
 				alert("Gagal, karena: " + error.message);
@@ -66,9 +69,9 @@ export const TokenUser = () => {
 			)}
 			{received && (
 				<div id="Candidate">
-					<div className="p-2">Nama: Shu Yamino</div>
-					<div className="p-2">Jabatan: Secretary</div>
-					<div className="p-2">Tanggal Lahir: April 4, 2000</div>
+					<div className="p-2">Nama: {candidate.name}</div>
+					<div className="p-2">Jabatan: {candidate.jobTitle}</div>
+					<div className="p-2">Tanggal Lahir: {candidate.birthDate}</div>
 					<div className="mt-4">
 						<button
 							onClick={handleButtonCandidateClick}
