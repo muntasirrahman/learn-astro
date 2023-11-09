@@ -4,3 +4,13 @@ export type Peserta = {
 	sekolah: string;
 	lulus?: boolean;
 };
+
+export type Token = {
+    token: string;
+}
+
+export type Candidate = {
+    name: string;
+    jobTitle: string;
+    birthDate: string;
+}
