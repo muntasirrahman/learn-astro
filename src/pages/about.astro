@@ -1,0 +1,22 @@
+---
+import { readMemberData } from "../backend/ReportService";
+import type { WarkopMember } from "../backend/ReportService";
+
+const anggota: WarkopMember = readMemberData(1);
+---
+
+<html>
+  <head>
+    <title>Member Detail</title>
+    </head>
+    <body>
+      <h1>{anggota.name}</h1>
+      <p>{anggota.school}</p>
+      <p>Here's a picture of a member:</p>      
+      <img src={anggota.imageUrl} height="300">
+    </body> 
+</html>
+
+<script>
+  console.log("Hello World in the frontend!");
+</script>

@@ -1,0 +1,19 @@
+@startuml Business
+
+actor HiringManager
+participant About.astro as AboutPage
+participant ReportService.ts as rs
+participant ReportRepository.ts as rr
+database ReportDB
+
+HiringManager -> AboutPage++: Request report
+AboutPage -> rs++:readMemberData(memberId)
+  rs -> rr++:findMemberById(id)
+    rr -> ReportDB++:select
+    return
+  return
+return
+
+
+@enduml
+
