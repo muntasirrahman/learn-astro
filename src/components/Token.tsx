@@ -20,19 +20,21 @@ export const TokenUser = () => {
 			body: tokenDataInJson,
 		})
 			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					alert("Token yang anda masukkan salah.");
+				if (!response.ok) {
+					throw new Error("Gagal mengambil data dari server");
 				}
+				return response.json();
 			})
 			.then((dataFromBackend: CandidateResponse) => {
-				setReceived(true);
 				const candidateData = dataFromBackend.candidate;
-				setCandidate(candidateData);
+				setCandidate(() => {
+					setReceived(true);
+					return candidateData;
+				});
 			})
 			.catch((error) => {
 				console.error(`error: ${error}`);
+				alert(`error: ${error}`);
 			});
 	};
 
