@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Candidate } from "..";
+import type { Candidate, CandidateResponse } from "..";
 
 export const TokenUser = () => {
 	const [token, setToken] = useState("");
@@ -7,8 +7,8 @@ export const TokenUser = () => {
 	const [received, setReceived] = useState(false);
 
 	const handleToken = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const tokenBaru = event.target.value;
-		setToken(tokenBaru);
+		const newToken = event.target.value;
+		setToken(newToken);
 	};
 
 	const handleButtonClick = () => {
@@ -20,20 +20,21 @@ export const TokenUser = () => {
 			body: tokenDataInJson,
 		})
 			.then((response) => {
-				if (response.ok) {
-					return response.json();
-				} else {
-					alert("Token yang anda masukkan salah.");
+				if (!response.ok) {
+					throw new Error("Gagal mengambil data dari server");
 				}
+				return response.json();
 			})
-			.then((dataFromBackend) => {
-				setReceived(true);
+			.then((dataFromBackend: CandidateResponse) => {
 				const candidateData = dataFromBackend.candidate;
-				setCandidate(candidateData);
+				setCandidate(() => {
+					setReceived(true);
+					return candidateData;
+				});
 			})
 			.catch((error) => {
-				console.error(error);
-				alert("Gagal, karena: " + error.message);
+				console.error(`error: ${error}`);
+				alert(`error: ${error}`);
 			});
 	};
 
@@ -58,9 +59,7 @@ export const TokenUser = () => {
 					<div className="mt-4">
 						<button
 							onClick={handleButtonClick}
-							className="inline-block px-5 py-3
-                        bg-blue-400 text-white rounded-lg shadow-lg
-                        tracking-wider text-sm"
+							className="inline-block px-5 py-3 bg-blue-400 text-white rounded-lg shadow-lg tracking-wider text-sm"
 						>
 							Enter
 						</button>

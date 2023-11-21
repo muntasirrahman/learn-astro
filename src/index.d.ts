@@ -6,17 +6,16 @@ export type Peserta = {
 };
 
 export type Token = {
-    token: string;
-}
+	token: string;
+};
 
 export type Candidate = {
-    name: string;
-    jobTitle: string;
-    birthDate: string;
-}
+	name: string;
+	jobTitle: string;
+	birthDate: string;
+};
 
-export type Candidate = {
-    name: string;
-    jobTitle: string;
-    birthDate: Date;
-}
+export type CandidateResponse = {
+	message: string;
+	candidate: Candidate;
+};
